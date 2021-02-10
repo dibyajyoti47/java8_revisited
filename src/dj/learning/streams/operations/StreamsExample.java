@@ -1,4 +1,4 @@
-package dj.learning.streams;
+package dj.learning.streams.operations;
 
 import dj.learning.data.Student;
 import dj.learning.data.StudentDataBase;
