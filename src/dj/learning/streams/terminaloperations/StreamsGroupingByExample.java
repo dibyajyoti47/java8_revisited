@@ -3,8 +3,11 @@ package dj.learning.streams.terminaloperations;
 import dj.learning.data.Student;
 import dj.learning.data.StudentDataBase;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class StreamsGroupingByExample {
@@ -12,7 +15,8 @@ public class StreamsGroupingByExample {
 //        groupStudentsByGender();
 //        customizeGroupStudentsByGender ();
 //        twoLevelGrouping();
-        towLevelGrouping2();
+//        towLevelGrouping2();
+        calculateTopGpa();
     }
 
 
@@ -45,5 +49,28 @@ public class StreamsGroupingByExample {
                         Collectors.summingInt(Student::getNotebooks))
                 );
         System.out.println(studentMap);
+    }
+
+    public static void calculateTopGpa () {
+        Map<Integer, Optional<Student>> studentMapOptional = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Student::getGradeLevel,
+                                Collectors.maxBy(Comparator.comparing(Student::getGpa))
+                        )
+                );
+//        System.out.println(studentMapOptional);
+        Map<Integer, Student> studentMapOptional1 = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Student::getGradeLevel,
+                        Collectors.collectingAndThen(
+                                Collectors.maxBy(Comparator.comparing(Student::getGpa)),
+                                Optional::get
+                            )
+                        )
+                );
+        System.out.println(studentMapOptional1);
     }
 }
