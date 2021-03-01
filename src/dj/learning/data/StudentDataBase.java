@@ -2,11 +2,19 @@ package dj.learning.data;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class StudentDataBase {
 
-    public static Supplier<Student> studentSupplier = ()-> new Student("Dibyajyoti", 8, 6.4, "male", Arrays.asList("Gaming", "Coding", "Vlogging"));
+    public static Supplier<Student> studentSupplier = ()-> {
+        Bike bike = new Bike();
+        bike.setName("Yamaha");
+        bike.setModel("Fazer");
+        Student student =  new Student("Dibyajyoti", 8, 6.4, "male", Arrays.asList("Gaming", "Coding", "Vlogging"));
+        student.setBike(Optional.of(bike));
+        return student;
+    };
 
     /**
      * Total of 6 students in the database.
